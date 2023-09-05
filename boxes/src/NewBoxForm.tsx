@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { v4 as uuid } from 'uuid';
-import BoxInterface from "./BoxList"
+import { IBox } from "./BoxList"
 
 /** Form for adding box.
  *
@@ -13,23 +13,26 @@ import BoxInterface from "./BoxList"
  * BoxList -> NewBoxForm
  */
 
-interface AddBoxInterface {
-  height: string;
-  width: string;
-  backgroundColor: string
+
+interface IAddBox {
+  height: string,
+  width: string,
+  backgroundColor: string,
 }
 
+interface INewBoxFormProps {
+  createBox(box: IBox): void;
+}
 
-
-function NewBoxForm({ createBox }) {
-  const [formData, setFormData] = useState<AddBoxInterface>({
+function NewBoxForm({ createBox }: INewBoxFormProps) {
+  const [formData, setFormData] = useState<IAddBox>({
     height: "",
     width: "",
     backgroundColor: "",
   });
 
   /** Update form input. */
-  function handleChange(evt) {
+  function handleChange(evt: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = evt.target;
     setFormData(formData => ({
       ...formData,
@@ -38,7 +41,7 @@ function NewBoxForm({ createBox }) {
   }
 
   /** Submit form: call function from parent & clear inputs. */
-  function handleSubmit(evt) {
+  function handleSubmit(evt: React.FormEvent) {
     evt.preventDefault();
     createBox({ ...formData, id: uuid() });
     setFormData({ height: "", width: "", backgroundColor: "" });
