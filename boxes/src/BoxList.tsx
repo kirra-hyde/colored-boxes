@@ -8,11 +8,18 @@ import NewBoxForm from "./NewBoxForm";
  * - boxes: [ { id, width, height, backgroundColor }, ... ]
  */
 
+export interface BoxInterface {
+  id: string;
+  width: number;
+  height: number;
+  backgroundColor: string
+}
+
 function BoxList() {
-  const [boxes, setBoxes] = useState([])
+  const [boxes, setBoxes] = useState<BoxInterface[]>([]);
 
   /** add box with given { id, width, height, backgroundColor } */
-  function add(newBox) {
+  function add(newBox: BoxInterface) {
     setBoxes(boxes => [...boxes, newBox]);
   }
 
@@ -24,7 +31,7 @@ function BoxList() {
   return (
     <div className="BoxList">
       <NewBoxForm createBox={add} />
-      {boxes.map(({ id, width, height, backgroundColor }) => (
+      {boxes.map(({ id, width, height, backgroundColor }: BoxInterface) => (
         <Box
           key={id}
           id={id}
